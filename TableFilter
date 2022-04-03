@@ -1,0 +1,20 @@
+//Length of new array
+local long checkID = 0;
+local boolean zero = true;
+for i = 1 to RawTable@length step 1
+if RawTable(n) == Filter then
+checkID = checkID + 1;
+end if;
+end if;
+FilteredTable@length = checkID;
+end for;
+
+//Filter out the tables
+local long nomo = 0;
+index n of RawTable
+if RawTable(n) == Filter then
+nomo = nomo + 1;
+FilteredTable(nomo) = RawTable(n);
+end if;
+end if;
+end index;
