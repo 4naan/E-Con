@@ -1,0 +1,17 @@
+USE JRFRapido
+
+
+Select Id = IDENTITY(INT, 1, 1), 
+[FieldValueFieldId],
+[FieldValueProductId],
+[FieldValueValue]
+Into   TemporaryTable
+From   [EcomProductCategoryFieldValue]
+
+
+Delete FROM TemporaryTable Where [FieldValueFieldId]<>'FrameType'
+
+UPDATE [JRFRapido].[dbo].[EcomSelectProducts] SET [FrameType] = [FieldValueValue] FROM (SELECT [FieldValueValue], [FieldValueProductId] FROM [JRFRapido].[dbo].[TemporaryTable]) AS 
+[TemporaryTable] WHERE [FieldValueProductId] = [ProductId]
+
+Drop Table TemporaryTable;
