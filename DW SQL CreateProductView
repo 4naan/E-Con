@@ -1,0 +1,29 @@
+
+SELECT 
+a.[FieldValueProductId] AS ProductId,
+b.[ProductNumber],
+c.[ProductName],
+d.[FieldValueValue] AS Supplier, 
+e.[FieldValueValue] AS Range, 
+f.[FieldValueValue] AS Type, 
+g.[FieldValueValue] AS FrameType
+
+FROM  (SELECT DISTINCT [FieldValueProductId] FROM [EcomProductCategoryFieldValue]) as a  /*[ProductId]*/
+FULL OUTER JOIN 
+(SELECT [ProductId],[ProductNumber] FROM [JRFRapido].[dbo].[EcomProducts] ) AS b /*[ProductNumber]*/
+ON a.[FieldValueProductId] = b.[ProductId]
+FULL OUTER JOIN 
+(SELECT [ProductId],[ProductName] FROM [JRFRapido].[dbo].[EcomProducts] ) AS c /*[ProductName]*/
+ON a.[FieldValueProductId] = c.[ProductId]
+FULL OUTER JOIN 
+(SELECT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Supplier') AS d /*[Supplier]*/
+ON a.[FieldValueProductId] = d.[FieldValueProductId]
+FULL OUTER JOIN 
+(SELECT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Range') AS e /*[Range]*/
+ON a.[FieldValueProductId] = e.[FieldValueProductId]
+FULL OUTER JOIN 
+(SELECT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Type') AS f /*[Type]*/
+ON a.[FieldValueProductId] = f.[FieldValueProductId]
+FULL OUTER JOIN 
+(SELECT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'FrameType') AS g /*[FrameType]*/
+ON a.[FieldValueProductId] = g.[FieldValueProductId]
