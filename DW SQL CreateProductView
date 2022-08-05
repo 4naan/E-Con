@@ -1,29 +1,63 @@
 
 SELECT 
-a.[FieldValueProductId] AS ProductId,
+a.[FieldValueProductId] as ProductId,
 b.[ProductNumber],
-c.[ProductName],
+b.[ProductName],
 d.[FieldValueValue] AS Supplier, 
-e.[FieldValueValue] AS Range, 
-f.[FieldValueValue] AS Type, 
-g.[FieldValueValue] AS FrameType
+e.[FieldValueValue] AS [Range], 
+f.[FieldValueValue] AS [Type], 
+g.[FieldValueValue] AS FrameType,
+h.[FieldValueValue] AS StructureMaterial,
+i.[FieldValueValue] AS SeatFinish,
+j.[FieldValueValue] AS BackFinish,
+k.[FieldValueValue] AS SeatHeight,
+l.[FieldValueValue] AS TopFinish,
+m.[FieldValueValue] AS TopShape
 
-FROM  (SELECT DISTINCT [FieldValueProductId] FROM [EcomProductCategoryFieldValue]) as a  /*[ProductId]*/
-FULL OUTER JOIN 
-(SELECT [ProductId],[ProductNumber] FROM [JRFRapido].[dbo].[EcomProducts] ) AS b /*[ProductNumber]*/
+
+FROM  (SELECT  Distinct [FieldValueProductId]
+  FROM [JRFRapido].[dbo].[EcomProductCategoryFieldValue]
+  WHERE [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') as a  /*[ProductId]*/
+ inner JOIN
+(SELECT DISTINCT [ProductId],[ProductNumber],[ProductName] FROM [JRFRapido].[dbo].[EcomProducts]) AS b /*[Supplier]*/
 ON a.[FieldValueProductId] = b.[ProductId]
-FULL OUTER JOIN 
-(SELECT [ProductId],[ProductName] FROM [JRFRapido].[dbo].[EcomProducts] ) AS c /*[ProductName]*/
-ON a.[FieldValueProductId] = c.[ProductId]
-FULL OUTER JOIN 
-(SELECT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Supplier') AS d /*[Supplier]*/
+ JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Supplier' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS d /*[Supplier]*/
 ON a.[FieldValueProductId] = d.[FieldValueProductId]
-FULL OUTER JOIN 
-(SELECT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Range') AS e /*[Range]*/
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Range' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS e /*[Range]*/
 ON a.[FieldValueProductId] = e.[FieldValueProductId]
-FULL OUTER JOIN 
-(SELECT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Type') AS f /*[Type]*/
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'Type' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS f /*[Type]*/
 ON a.[FieldValueProductId] = f.[FieldValueProductId]
-FULL OUTER JOIN 
-(SELECT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'FrameType') AS g /*[FrameType]*/
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'FrameType' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS g /*[FrameType]*/
 ON a.[FieldValueProductId] = g.[FieldValueProductId]
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'StructureMaterial' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS h /*[StructureMaterial]*/
+ON a.[FieldValueProductId] = h.[FieldValueProductId]
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'SeatFinish' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS i /*[SeatFinish]*/
+ON a.[FieldValueProductId] = i.[FieldValueProductId]
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'BackFinish' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS j /*[BackFinish]*/
+ON a.[FieldValueProductId] = j.[FieldValueProductId]
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'SeatHeight' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS k /*[SeatHeight]*/
+ON a.[FieldValueProductId] = k.[FieldValueProductId]
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'TopFinish' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS l /*[TopFinish]*/
+ON a.[FieldValueProductId] = l.[FieldValueProductId]
+ FULL OUTER JOIN
+(SELECT DISTINCT [FieldValueProductId],[FieldValueValue] FROM [EcomProductCategoryFieldValue] WHERE [FieldValueFieldId] = 'TopShape' AND [FieldValueFieldCategoryId] <> 'FabricSuppliers' AND [FieldValueFieldCategoryId] <> 'LeatherSuppliers') AS m /*[TopShape]*/
+ON a.[FieldValueProductId] = m.[FieldValueProductId]
+
+WHERE A.FieldValueProductId is not null and A.FieldValueProductId <> 'NULL'
+order by a.FieldValueProductId
+
+
+
+
+
+
+
